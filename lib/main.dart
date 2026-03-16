@@ -47,6 +47,7 @@ import 'dart:io'
 import 'core/services/android_background.dart';
 import 'core/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'bridge/kelivo_api_bridge_service.dart';
 
 final RouteObserver<ModalRoute<dynamic>> routeObserver =
     RouteObserver<ModalRoute<dynamic>>();
@@ -397,6 +398,12 @@ class MyApp extends StatelessWidget {
                       } catch (_) {}
                     });
                   }
+
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    try {
+                      KelivoApiBridgeService.instance.start(ctx);
+                    } catch (_) {}
+                  });
 
                   // Desktop tray + close behaviour (minimize to tray) sync
                   final l10n = AppLocalizations.of(ctx);
